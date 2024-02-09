@@ -1,0 +1,23 @@
+ENTRY(_start)
+SECTIONS {
+    . = 0x80000000;
+    .text : {
+        *(_start)
+        *(.text*)
+        *(.data*)
+        *(.bss*)
+        *(.got)
+    }
+    .data : {
+        *(.rodata)
+    }
+    . += 0x1000; /* 4kb stack */
+    stack_top = .;
+
+    /DISCARD/ : {
+        /* *(.got) */
+        *(.pdr)
+        *(.reginfo)
+        *(.MIPS.abiflags)
+    }
+}
