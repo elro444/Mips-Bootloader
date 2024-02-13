@@ -30,6 +30,4 @@ main.o:	main.c serial.h
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
-	@-rm kernel.bin
-	@-rm kernel.elf
-	@-rm *.o
+	-@rm kernel.bin kernel.elf disasm *.o 2>/dev/null || true
