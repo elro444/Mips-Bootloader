@@ -2,3 +2,4 @@
 *.elf
 kernel.bin
 bootloader.bin
+disasm
