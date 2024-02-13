@@ -1,6 +1,6 @@
 ENTRY(_start)
 SECTIONS {
-    . = 0x80000000;
+    . = 0xbfc00000;
     .text : {
         *(_start)
         *(.text*)
@@ -11,8 +11,7 @@ SECTIONS {
     .data : {
         *(.rodata)
     }
-    . += 0x1000; /* 4kb stack */
-    stack_top = .;
+    stack_top = 0x80001000;
 
     /DISCARD/ : {
         /* *(.got) */
