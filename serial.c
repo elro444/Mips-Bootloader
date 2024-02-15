@@ -15,14 +15,14 @@ void init_serial(void)
     *UART0_REG(4) = 0x0b;
 }
 
-static int is_transmit_empty(void)
+static inline int is_transmit_empty(void)
 {
     return *UART0_REG(5) & 0x20;
 }
 
-static void serial_putc(char c)
+static inline void serial_putc(char c)
 {
-    do {} while (is_transmit_empty() == 0);
+    do {} while (!is_transmit_empty());
     *UART0_REG(0) = c;
 }
 
@@ -33,4 +33,15 @@ void serial_out(const char *string)
         serial_putc(*string);
         string++;
     }
+}
+
+static inline int is_receive_empty(void)
+{
+    return *UART0_REG(5) & 0x1;
+}
+
+char serial_getch(void)
+{
+    do {} while (!is_receive_empty());
+    return *UART0_REG(0);
 }
