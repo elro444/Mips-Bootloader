@@ -1,45 +1,36 @@
 #include "serial.h"
 
-#define UART0_BASE 0x1fd003f8 /* 8250 COM1 */
+#define UART0_BASE (0x1fd003f8) /* 8250 COM1 */
+#define UART0_REG(index) ((char *)(UART0_BASE + index))
 
 void init_serial(void)
 {
     volatile char *addr;
-    addr = (volatile char *)(UART0_BASE + 1);
-    *addr = 0x00;
-    addr = (volatile char *)(UART0_BASE + 3);
-    *addr = 0x80;
-    addr = (volatile char *)(UART0_BASE + 0);
-    *addr = 0x03;
-    addr = (volatile char *)(UART0_BASE + 1);
-    *addr = 0x00;
-    addr = (volatile char *)(UART0_BASE + 3);
-    *addr = 0x03;
-    addr = (volatile char *)(UART0_BASE + 2);
-    *addr = 0xc7;
-    addr = (volatile char *)(UART0_BASE + 4);
-    *addr = 0x0b;
+    *UART0_REG(1) = 0x00;
+    *UART0_REG(3) = 0x80;
+    *UART0_REG(0) = 0x03;
+    *UART0_REG(1) = 0x00;
+    *UART0_REG(3) = 0x03;
+    *UART0_REG(2) = 0xc7;
+    *UART0_REG(4) = 0x0b;
 }
 
 static int is_transmit_empty(void)
 {
-    volatile char *addr = (volatile char *)(UART0_BASE + 5);
-    return *addr & 0x20;
+    return *UART0_REG(5) & 0x20;
 }
 
-static void serial_putc(char a)
+static void serial_putc(char c)
 {
-    while (is_transmit_empty() == 0)
-        ;
-    volatile char *addr = (volatile char *)UART0_BASE;
-    *addr = a;
+    do {} while (is_transmit_empty() == 0);
+    *UART0_REG(0) = c;
 }
 
-void serial_out(const char *s)
+void serial_out(const char *string)
 {
-    while (*s != '\0')
+    while (*string != '\0')
     {
-        serial_putc(*s);
-        s++;
+        serial_putc(*string);
+        string++;
     }
 }
