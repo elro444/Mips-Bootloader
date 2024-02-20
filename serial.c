@@ -45,3 +45,24 @@ char serial_getch(void)
     do {} while (!is_receive_empty());
     return *UART0_REG(0);
 }
+
+void serial_gets(char *buffer, unsigned size)
+{
+    unsigned received = 0;
+    while (received < size) {
+        char c = serial_getch();
+        serial_putc(c);
+        if (c == '\n' || c == '\r') {
+            break;
+        }
+        if (c == '\b') {
+            serial_putc('X');
+        }
+        buffer[received++] = c;
+    }
+    // Add a terminating NULL
+    if (received >= size) {
+        received = size - 1;
+    }
+    buffer[received] = 0;
+}
