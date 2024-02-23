@@ -51,10 +51,11 @@ void serial_gets(char *buffer, unsigned size)
     unsigned received = 0;
     while (received < size) {
         char c = serial_getch();
-        serial_putc(c);
         if (c == '\n' || c == '\r') {
+            serial_putc('\n');
             break;
         }
+        serial_putc(c);
         if (c == '\b') {
             serial_putc('X');
         }
