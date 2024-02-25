@@ -1,0 +1,12 @@
+CC = gcc
+
+all: build run
+
+build: playground.c
+	$(CC) playground.c -o playground
+
+run:
+	./playground
+
+clean:
+	-@rm playground.o playground output.bin 2>/dev/null || true
