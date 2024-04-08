@@ -3,7 +3,7 @@ LD = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-ld
 AS = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-as
 OBJCOPY = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objcopy
 OBJDUMP = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objdump
-CCFLAGS = -mxgot -fno-pic -ffunction-sections -fdata-sections
+CCFLAGS = -mxgot -fno-pic -ffunction-sections -fdata-sections -Iinclude
 LDFLAGS = -nostdlib -T kernel-ld.txt # -Map=mapfile
 
 all: clean build
