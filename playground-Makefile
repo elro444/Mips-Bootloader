@@ -1,9 +1,15 @@
 CC = gcc
+LD = ld
+CCFLAGS = -Iinclude
+# LDFLAGS = 
 
 all: build run
 
 build: playground.c
-	$(CC) playground.c -o playground
+	$(CC) $(CCFLAGS) -c lzma/lzma.c -o lzma/lzma.o
+	$(CC) $(CCFLAGS) -c playground.c -o playground.o
+	$(CC) playground.o lzma/lzma.o -o playground
+
 
 run:
 	./playground

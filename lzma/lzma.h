@@ -1,15 +1,9 @@
 #ifndef LZMA_H
 #define LZMA_H
 
-#define   R_OK                           0
-#define   R_ERR_MEMORY_RUNOUT            1
-#define   R_ERR_UNSUPPORTED              2
-#define   R_ERR_OUTPUT_OVERFLOW          3
-#define   R_ERR_INPUT_OVERFLOW           4
-#define   R_ERR_DATA                     5
-#define   R_ERR_OUTPUT_LEN_MISMATCH      6
+#include "types.h"
 
-int lzma_deflate(char *dst, const char *data, unsigned data_size);
-int lzma_inflate(char *dst, const char *data, unsigned data_size);
+int lzma_deflate(const u8 *data, u32 data_size, u8 *dst, u32 *dst_size);
+int lzma_inflate(const u8 *data, u32 data_size, u8 *dst, u32 *dst_size);
 
 #endif /* LZMA_H */

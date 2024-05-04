@@ -81,3 +81,10 @@ _start:
 Only when I took a step back, and tested against my original code, I realized it was working this whole time, and while looking for the other ideas I actually broke my code for UART.
 
 Overall, learned a lot, but exhausted.
+
+
+## Adding LZMA support
+
+I looked online for some libraries. I then found TinyLZMA online `git@github.com:WangXuan95/TinyLZMA.git`
+
+There are some problems with it, as it used `malloc` in some situations, and I want to have a simple _inflate_/_deflate_ interface, so I created my own `lzma.h` and `lzma.c` files. I will copy the implementation from the library, with minimal changes.
