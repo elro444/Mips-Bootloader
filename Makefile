@@ -4,7 +4,7 @@ AS = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-as
 OBJCOPY = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objcopy
 OBJDUMP = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objdump
 CCFLAGS = -mxgot -fno-pic -ffunction-sections -fdata-sections -Iinclude
-LDFLAGS = -nostdlib -T kernel-ld.txt # -Map=mapfile
+LDFLAGS = -nostdlib -T src/kernel-ld.txt # -Map=mapfile
 
 all: clean build
 
@@ -23,13 +23,13 @@ debug: kernel.elf
 kernel.elf: start.o main.o serial.o
 	$(LD) $(LDFLAGS) $^ -o $@
 
-start.o: start.S
+start.o: src/start.S
 	$(AS) $< -o $@
 
-serial.o: serial.c serial.h
+serial.o: src/serial.c include/serial.h
 	$(CC) $(CCFLAGS) -c $< -o $@
 
-main.o:	main.c serial.h
+main.o:	src/main.c include/serial.h
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
