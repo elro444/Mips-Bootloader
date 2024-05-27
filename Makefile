@@ -6,14 +6,16 @@ OBJDUMP = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objdump
 CCFLAGS = -mxgot -fno-pic -ffunction-sections -fdata-sections -Iinclude
 LDFLAGS = -nostdlib -T src/kernel-ld.txt # -Map=mapfile
 
+OUTPUT = bootloader.bin
+
 all: clean build
 
-run: bootloader.bin
-	@qemu-system-mips -M mipssim -bios $< -serial stdio 2>/dev/null
+run: build soft-clean
+	@qemu-system-mips -M mipssim -bios $(OUTPUT) -serial stdio 2> /dev/null
 
-build: bootloader.bin
+build: $(OUTPUT)
 
-bootloader.bin: kernel.elf
+$(OUTPUT): kernel.elf
 	$(OBJCOPY) -O binary $< $@
 
 debug: kernel.elf
@@ -32,5 +34,8 @@ serial.o: src/serial.c include/serial.h
 main.o:	src/main.c include/serial.h
 	$(CC) $(CCFLAGS) -c $< -o $@
 
-clean:
-	-@rm bootloader.bin kernel.bin kernel.elf disasm *.o 2>/dev/null || true
+soft-clean:
+	-@rm kernel.elf *.o || true
+
+clean: soft-clean
+	-@rm bootloader.bin 2>/dev/null || true
