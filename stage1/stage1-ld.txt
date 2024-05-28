@@ -11,10 +11,9 @@ SECTIONS {
     .data : {
         *(.rodata)
     }
-    stack_top = 0x80001000;
+    stack_top = 0x80400000;
 
     /DISCARD/ : {
-        /* *(.got) */
         *(.pdr)
         *(.reginfo)
         *(.MIPS.abiflags)

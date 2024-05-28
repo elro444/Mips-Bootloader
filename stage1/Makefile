@@ -4,39 +4,36 @@ AS = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-as
 ROOTDIR = ..
 OBJCOPY = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objcopy
 OBJDUMP = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objdump
-CCFLAGS = -mno-abicalls -mxgot -fno-pic -ffunction-sections -fdata-sections -I$(ROOTDIR)/include  -Wno-builtin-declaration-mismatch
-LDFLAGS = -nostdlib -T stage2-ld.txt
+CCFLAGS =  -mno-abicalls -mxgot -fno-pic -ffunction-sections -fdata-sections -I$(ROOTDIR)/include -Wno-builtin-declaration-mismatch
+LDFLAGS = -nostdlib -T stage1-ld.txt
 LOG = @echo [+]
 
-OUTPUT = stage2.bin
+OUTPUT = stage1.bin
 
 all: build soft-clean
 
 build: $(OUTPUT)
 
-$(OUTPUT): stage2.elf
-	$(LOG) Dumping stage2 binary
+$(OUTPUT): stage1.elf
+	$(LOG) Dumping stage1 binary
 	@$(OBJCOPY) -O binary $< $@
 
-stage2.elf: main.o serial.o commands.o
-	$(LOG) Linking stage2
+stage1.elf: start.o main.o serial.o
+	$(LOG) Linking stage1
 	@$(LD) $(LDFLAGS) $^ -o $@
 
-# start.o: start.S
-# 	@$(AS) $< -o $@
-
-commands.o: commands.c commands.h
-	@$(CC) $(CCFLAGS) -c $< -o $@
+start.o: start.S
+	@$(AS) $< -o $@
 
 serial.o: $(ROOTDIR)/common/serial.c $(ROOTDIR)/include/serial.h
 	@$(CC) $(CCFLAGS) -c $< -o $@
 
 main.o:	main.c $(ROOTDIR)/include/serial.h
-	$(LOG) Building stage2
+	$(LOG) Building stage1
 	@$(CC) $(CCFLAGS) -c $< -o $@
 
 soft-clean:
-	-@rm stage2.elf *.o 2> /dev/null || true
+	-@rm stage1.elf *.o 2> /dev/null || true
 
 clean: soft-clean
-	-@rm stage2.bin 2> /dev/null || true
+	-@rm $(OUTPUT) 2> /dev/null || true
