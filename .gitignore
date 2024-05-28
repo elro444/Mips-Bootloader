@@ -1,5 +1,4 @@
 *.o
 *.elf
-kernel.bin
-bootloader.bin
+*.bin
 disasm
