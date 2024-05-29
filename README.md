@@ -9,6 +9,12 @@ I am writing this bootloader as an exercise to myself to learn about compilation
 
 ### Building and running
 
+#### Cross compiler
+
+The project assumes a cross compiler is preset at `/opt/cross/mips-linux-musl-cross`. If you have one placed somewhere else just update it in the root makefile.
+
+#### Compiling
+
 To build the project just run `make` from the root directory.
 
 To run - type `make run`, and it will run `qemu-system-mips` with the compiled bootloader as the bios.

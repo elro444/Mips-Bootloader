@@ -1,9 +1,4 @@
-CC = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-gcc
-LD = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-ld
-AS = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-as
 ROOTDIR = ..
-OBJCOPY = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objcopy
-OBJDUMP = /opt/cross/mips-linux-musl-cross/bin/mips-linux-musl-objdump
 CCFLAGS = -mno-abicalls -mxgot -fno-pic -ffunction-sections -fdata-sections -I$(ROOTDIR)/include  -Wno-builtin-declaration-mismatch
 LDFLAGS = -nostdlib -T stage2-ld.txt
 LOG = @echo [+]

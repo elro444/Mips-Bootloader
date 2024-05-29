@@ -1,3 +1,12 @@
+CROSS_COMPILER_PATH = /opt/cross/mips-linux-musl-cross
+CC = $(CROSS_COMPILER_PATH)/bin/mips-linux-musl-gcc
+LD = $(CROSS_COMPILER_PATH)/bin/mips-linux-musl-ld
+AS = $(CROSS_COMPILER_PATH)/bin/mips-linux-musl-as
+OBJCOPY = $(CROSS_COMPILER_PATH)/bin/mips-linux-musl-objcopy
+OBJDUMP = $(CROSS_COMPILER_PATH)/bin/mips-linux-musl-objdump
+
+export
+
 MAKEFLAGS += --no-print-directory
 
 LOG = @echo [+]
