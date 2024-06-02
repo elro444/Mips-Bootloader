@@ -13,6 +13,9 @@ class Partition:
     def size(self):
         return len(self.data)
 
+    def __repr__(self):
+        return f'{self.name}:{hex(self.start)}-{hex(self.start+self.size)}'
+
 
 def is_colliding(a: Partition, b: Partition) -> bool:
     if not a.size or not b.size:
@@ -46,16 +49,16 @@ def main(output, partitions):
         if not filepath.is_file():
             raise ValueError(f"File {filepath} does not exist!")
         if offset < 0:
-            raise ValueError(f"Partition {partition_parameter!r} has negative offset {offset}!")
+            raise ValueError(f"Partition {filepath!r} has negative offset {offset}!")
 
         with open(filepath, 'rb') as f:
             data = f.read()
 
-        new_partition = Partition(partition_parameter, offset, data)
+        new_partition = Partition(filepath, offset, data)
         for partition in parsed_partitions:
             if is_colliding(new_partition, partition):
                 raise ValueError(
-                    f"Partition {new_partition.name!r} collides with partition {partition.name}!"
+                    f"Partition {new_partition!r} collides with partition {partition!r}!"
                 )
 
         parsed_partitions.append(new_partition)
