@@ -18,3 +18,25 @@ The project assumes a cross compiler is preset at `/opt/cross/mips-linux-musl-cr
 To build the project just run `make` from the root directory.
 
 To run - type `make run`, and it will run `qemu-system-mips` with the compiled bootloader as the bios.
+
+You can expect the following output (will update as we go)
+```
+╭─ ~/repos/bootloader on master
+╰─❯ make
+[+] Cleaning
+[+] Building stage1
+[+] Linking stage1
+[+] Dumping stage1 binary
+[+] Building stage2
+[+] Linking stage2
+[+] Dumping stage2 binary
+[+] Arranging flash partitions
+[+] Done
+╭─ ~/repos/bootloader on master
+╰─❯ make run
+Copying stage 2 from flash to ram
+Starting decompress
+fastlz_decompress: 28969
+Jumping to stage 2
+Hello from stage 2!!
+```
