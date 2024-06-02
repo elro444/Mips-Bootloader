@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    serial_out("Hello from stage 2!!\n");
+    printf("Hello from stage 2!!\n");
     while (1);
     return 0;
 }
