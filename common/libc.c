@@ -11,6 +11,8 @@ void memmove(u8 *dst, const u8 *src, u32 size)
     else {
         for (u32 i = size - 1; i >= 0; --i) {
             dst[i] = src[i];
+            if (i == 0)
+                break;
         }
     }
 }
