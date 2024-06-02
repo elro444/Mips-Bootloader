@@ -23,7 +23,7 @@ $(OUTPUT): stage1/stage1.bin stage2/stage2.bin
 	$(LOG) Arranging flash partitions
 	@utils/format_flash.py $@ \
 		--partition stage1/stage1.bin:0 \
-		--partition stage2/stage2.bin:0x1000
+		--partition stage2/stage2.bin:0x8000
 	$(LOG) Done
 
 stage1/stage1.bin:
