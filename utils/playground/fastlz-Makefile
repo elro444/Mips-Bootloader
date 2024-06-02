@@ -1,0 +1,18 @@
+CC = gcc
+LD = ld
+CCFLAGS = -I../../include -I../../common/ -DNO_LIBC_TYPES -Werror=all
+# LDFLAGS =
+
+all: build run
+
+build: fastlz-main.c
+	$(CC) $(CCFLAGS) -c ../../common/fast_lz/fastlz.c -o fastlz.o
+	$(CC) $(CCFLAGS) -c fastlz-main.c -o fastlz-main.o
+	$(CC) fastlz-main.o fastlz.o -o fastlz-main
+
+
+run:
+	./fastlz-main
+
+clean:
+	-@rm fastlz.o fastlz-main.o fastlz-main output.bin 2>/dev/null || true
