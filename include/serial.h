@@ -1,9 +1,7 @@
 #ifndef SEIRAL_H
 #define SEIRAL_H
 
-void init_serial(void);
-void serial_out(const char *str);
-char serial_getch(void);
-void serial_gets(char *buffer, unsigned size);
+void puts(const char *str);
+int printf(const char *format, ...);
 
 #endif // SEIRAL_H
