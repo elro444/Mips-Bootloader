@@ -1,0 +1,18 @@
+CC = gcc
+LD = ld
+CCFLAGS = -I../../include -I../../
+# LDFLAGS =
+
+all: build run
+
+build: lzma-main.c
+	$(CC) $(CCFLAGS) -c ../../lzma/lzma.c -o lzma.o
+	$(CC) $(CCFLAGS) -c lzma-main.c -o lzma-main.o
+	$(CC) lzma-main.o lzma.o -o lzma-main
+
+
+run:
+	./lzma-main
+
+clean:
+	-@rm lzma-main.o lzma-main output.bin 2>/dev/null || true
