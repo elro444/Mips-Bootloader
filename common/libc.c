@@ -1,35 +1,40 @@
 #include "libc.h"
+#include "serial.h"
 
-
-void memmove(u8 *dst, const u8 *src, u32 size)
+void memmove(void *dst, const void *src, u32 size)
 {
+    u8 *dst8 = dst;
+    const u8 *src8 = src;
     if (src > dst) {
         for (u32 i = 0; i < size; ++i) {
-            dst[i] = src[i];
+            dst8[i] = src8[i];
         }
     }
     else {
         for (u32 i = size - 1; i >= 0; --i) {
-            dst[i] = src[i];
+            dst8[i] = src8[i];
             if (i == 0)
                 break;
         }
     }
 }
 
-void memset(u8 *dst, u8 value, u32 size)
+void memset(void *dst, u8 value, u32 size)
 {
+    u8 *dst8 = dst;
     while (size-- > 0)
-        *dst++ = value;
+        *dst8++ = value;
 }
 
-int memcmp(const u8 *a, const u8 *b, u32 size)
+int memcmp(const void *a, const void *b, u32 size)
 {
+    const u8 *a8 = a;
+    const u8 *b8 = b;
     while (size > 0) {
-        if (*a != *b)
-            return *a - *b;
-        ++a;
-        ++b;
+        if (*a8 != *b8)
+            return *a8 - *b8;
+        ++a8;
+        ++b8;
         --size;
     }
     return 0;
@@ -58,7 +63,7 @@ void strcat(char *a, const char *b)
     *a = 0;
 }
 
-unsigned strlen(char *str)
+unsigned strlen(const char *str)
 {
     unsigned length = 0;
     while (*str++) {
@@ -82,23 +87,27 @@ char *strstr(const char *haystack, const char *needle)
 {
     u32 needle_len = strlen(needle);
     while (*haystack) {
-        if (0 == memcmp(haystack, needle, needle_len))
-            return haystack;
+
+        if (0 == memcmp(haystack, needle, needle_len)) {
+    
+            return (char *)haystack;
+        }
+        ++haystack;
     }
     return NULL;
 }
 
-char *strtok(const char *str, const char *delim, char **saveptr)
+char *strtok(char *str, const char *delim, char **saveptr)
 {
     unsigned delim_length = strlen(delim);
     if (NULL != str) {
         // First call, start from the beginning
-        *saveptr = str;
+        *saveptr = (char *)str;
     }
     else {
         str = *saveptr;
     }
-    
+
     if (NULL == str)
         return NULL;
 

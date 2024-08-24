@@ -4,4 +4,7 @@
 void puts(const char *str);
 int printf(const char *format, ...);
 
+void gets(char *buffer, unsigned size);
+
+
 #endif // SEIRAL_H

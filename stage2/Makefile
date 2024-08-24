@@ -1,5 +1,5 @@
 ROOTDIR = ..
-CCFLAGS = -mno-abicalls -mxgot -fno-pic -ffunction-sections -fdata-sections -I$(ROOTDIR)/include  -Wno-builtin-declaration-mismatch -Werror=all
+CCFLAGS = -mno-abicalls -mxgot -fno-pic -ffunction-sections -fdata-sections -I$(ROOTDIR)/include  -Wno-builtin-declaration-mismatch -Werror=all -fno-builtin-printf
 LDFLAGS = -nostdlib -T stage2-ld.txt
 LOG = @echo [+]
 

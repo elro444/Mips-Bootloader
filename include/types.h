@@ -2,6 +2,14 @@
 #define TYPES_H
 
 
+#ifndef true
+#define true 1
+#endif
+
+#ifndef false
+#define false 0
+#endif
+
 typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short u16;

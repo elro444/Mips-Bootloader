@@ -40,7 +40,7 @@ char serial_getch(void)
     return *UART0_REG(0);
 }
 
-void serial_gets(char *buffer, unsigned size)
+void gets(char *buffer, unsigned size)
 {
     unsigned received = 0;
     while (received < size) {
