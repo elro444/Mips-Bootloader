@@ -9,15 +9,19 @@
 #define UART0_BASE (0x1fd003f8) /* 8250 COM1 */
 #define UART0_REG(index) ((char *)(UART0_BASE + index))
 
+#define UART_TX         (0x0)
+#define UART_LSR        (0x5)
+#define UART_LSR_THRE   (0x20)
+
 static inline int is_transmit_empty(void)
 {
-    return *UART0_REG(5) & 0x20;
+    return *UART0_REG(UART_LSR) & UART_LSR_THRE;
 }
 
 void serial_putc(char c)
 {
     do {} while (!is_transmit_empty());
-    *UART0_REG(0) = c;
+    *UART0_REG(UART_TX) = c;
 }
 
 void serial_out(const char *string)
@@ -31,13 +35,13 @@ void serial_out(const char *string)
 
 static inline int is_receive_empty(void)
 {
-    return *UART0_REG(5) & 0x1;
+    return *UART0_REG(UART_LSR) & 0x1;
 }
 
 char serial_getch(void)
 {
     do {} while (!is_receive_empty());
-    return *UART0_REG(0);
+    return *UART0_REG(UART_TX);
 }
 
 void gets(char *buffer, unsigned size)
